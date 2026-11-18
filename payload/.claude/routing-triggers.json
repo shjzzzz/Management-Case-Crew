@@ -1,0 +1,194 @@
+{
+  "_comment": "Intent -> project Skill trigger table used by hooks/routing_hint.py. Ordered by priority: the first matching entry is the primary route. Patterns are Python regexes, matched case-insensitively against the user's prompt.",
+  "routes": [
+    {
+      "skill": "research-pipeline",
+      "patterns": [
+        "完整(地)?(做|开展|推进)",
+        "推进(这个|我的|一个)?(案例)?研究",
+        "规划并推进",
+        "继续上次",
+        "全流程",
+        "整个(研究项目|MBA论文|案例论文)",
+        "上次的研究",
+        "接着做",
+        "做到哪"
+      ]
+    },
+    {
+      "skill": "ingest-source",
+      "patterns": [
+        "摄入",
+        "入库",
+        "加入知识库",
+        "_sources"
+      ]
+    },
+    {
+      "skill": "query-wiki",
+      "patterns": [
+        "知识库里",
+        "库里(有|关于|的)",
+        "根据知识库",
+        "我们已有的文献"
+      ]
+    },
+    {
+      "skill": "wiki-lint",
+      "patterns": [
+        "体检",
+        "健康状况",
+        "断链",
+        "孤立页",
+        "wiki.?lint"
+      ]
+    },
+    {
+      "skill": "paper-refine",
+      "patterns": [
+        "精修",
+        "修改稿",
+        "返修",
+        "按.{0,6}(盲审|审稿|导师)?意见.{0,3}修改",
+        "多轮修改"
+      ]
+    },
+    {
+      "skill": "paper-draft",
+      "patterns": [
+        "起草(论文|全文|初稿)",
+        "写初稿",
+        "论文初稿",
+        "撰写(全文|论文)",
+        "分节写作",
+        "把大纲写成"
+      ]
+    },
+    {
+      "skill": "paper-outline",
+      "patterns": [
+        "论文大纲",
+        "写作大纲",
+        "论文框架",
+        "论文结构",
+        "主张清单",
+        "MBA.{0,4}(论文|大纲|结构)"
+      ]
+    },
+    {
+      "skill": "academic-review",
+      "patterns": [
+        "盲审",
+        "审稿",
+        "挑刺",
+        "答辩预审",
+        "审查(这个|我的|一下)?(案例)?(设计|论文|稿件|草稿)",
+        "referee",
+        "审(一下|阅|查一下)"
+      ]
+    },
+    {
+      "skill": "research-question",
+      "patterns": [
+        "选题",
+        "案例选择",
+        "研究问题",
+        "收敛成",
+        "定题",
+        "选哪家(企业|公司)"
+      ]
+    },
+    {
+      "skill": "case-design-audit",
+      "patterns": [
+        "案例(研究)?设计",
+        "单一案例",
+        "单案例",
+        "三角验证",
+        "建构效度",
+        "内部效度",
+        "外部效度",
+        "证据链",
+        "访谈提纲",
+        "案例协议",
+        "case.?design"
+      ]
+    },
+    {
+      "skill": "case-data-analysis",
+      "patterns": [
+        "财务(指标|比率|分析)",
+        "杜邦分析",
+        "有效税率",
+        "\\bETR\\b",
+        "税负率",
+        "税负测算",
+        "同业对标",
+        "访谈编码",
+        "质性编码",
+        "问卷(统计|信效度)",
+        "描述统计",
+        "数据清洗",
+        "测算"
+      ]
+    },
+    {
+      "skill": "theory-modeling",
+      "patterns": [
+        "分析框架",
+        "理论框架",
+        "\\bSWOT\\b",
+        "\\bPEST(EL)?\\b",
+        "波特五力",
+        "价值链",
+        "\\bCOSO\\b",
+        "内部控制",
+        "风险管理框架",
+        "委托代理",
+        "公司治理",
+        "业财税融合",
+        "机制分析"
+      ]
+    },
+    {
+      "skill": "literature-review",
+      "patterns": [
+        "文献综述",
+        "梳理.{0,15}文献",
+        "研究现状",
+        "研究缺口",
+        "文献矩阵",
+        "找文献",
+        "literature review",
+        "(相关|有哪些|国内外|已有).{0,6}文献",
+        "文献(有哪些|回顾|梳理)"
+      ]
+    },
+    {
+      "skill": "tax-policy-analysis",
+      "patterns": [
+        "偷漏税",
+        "偷税",
+        "逃税",
+        "虚开(增值税|专用)?发票",
+        "隐匿收入",
+        "税务稽查",
+        "税收筹划",
+        "税务筹划",
+        "税务风险",
+        "税法",
+        "个人所得税",
+        "个税",
+        "增值税",
+        "企业所得税",
+        "征管",
+        "税收政策",
+        "税收优惠",
+        "核定征收",
+        "税收遵从",
+        "关联交易定价",
+        "法律依据"
+      ]
+    }
+  ]
+}

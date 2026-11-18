@@ -1,0 +1,163 @@
+{
+  "_comment": "Stage definitions for the Research Director (/research-pipeline) adapted for Management Single-Case & Tax/Tax-Law Studies (MBA thesis). Read by scripts/orchestrator.py and hooks/orchestrator_guard.py.",
+  "max_retries": 2,
+  "stale_minutes": 30,
+  "max_parallel_cap": 3,
+  "stages": [
+    {
+      "id": "S1",
+      "name": "选题与案例",
+      "owner": "/research-question",
+      "agents": [],
+      "min_artifacts": 1,
+      "gate": "单一案例对象、典型性依据与核心管理/涉税问题是否确定？"
+    },
+    {
+      "id": "S2",
+      "name": "文献与理论",
+      "owner": "/literature-review",
+      "agents": [
+        "literature-agent"
+      ],
+      "min_artifacts": 1,
+      "gate": "管理学理论基础与税法/案例文献缺口是否真实、无遗漏？"
+    },
+    {
+      "id": "S3",
+      "name": "框架与税法",
+      "owner": "theory-agent / tax-policy-agent",
+      "agents": [
+        "theory-agent",
+        "tax-policy-agent"
+      ],
+      "max_parallel": 2,
+      "min_artifacts": 1,
+      "gate": "管理分析框架能否支撑诊断？税法依据与违法/筹划边界是否核实？"
+    },
+    {
+      "id": "S4",
+      "name": "案例设计",
+      "owner": "/case-design-audit",
+      "agents": [
+        "case-design-agent"
+      ],
+      "min_artifacts": 2,
+      "require_name": [
+        "analysis-plan|分析计划|case-protocol"
+      ],
+      "gate": "单案例效度/信度与三角验证方案是否可辩护？数据与访谈计划是否冻结？"
+    },
+    {
+      "id": "S5",
+      "name": "数据与测算",
+      "owner": "case-data-agent",
+      "agents": [
+        "case-data-agent"
+      ],
+      "min_artifacts": 2,
+      "require_name": [
+        "log|日志"
+      ],
+      "gate": "财务指标、税负/有效税率测算与证据编码是否按计划完成并可复现？"
+    },
+    {
+      "id": "S6",
+      "name": "盲审与预审",
+      "owner": "academic-reviewer",
+      "agents": [
+        "academic-reviewer"
+      ],
+      "min_artifacts": 1,
+      "require_text": [
+        "Fatal",
+        "Major",
+        "Minor"
+      ],
+      "gate": "MBA 盲审级意见与答辩追问是否已完整汇报？"
+    },
+    {
+      "id": "S7",
+      "name": "决定",
+      "owner": "Research Director + 研究者",
+      "agents": [],
+      "min_artifacts": 0,
+      "gate": "致命问题是否已解决？接受 / 退回 / 停止"
+    },
+    {
+      "id": "S8",
+      "name": "论文大纲",
+      "owner": "/paper-outline",
+      "agents": [],
+      "min_artifacts": 1,
+      "require_name": [
+        "outline|大纲"
+      ],
+      "checks": [
+        "no_open_questions"
+      ],
+      "gate": "C1：主张清单、MBA 案例章节结构与对策方案布局是否确定？"
+    },
+    {
+      "id": "S9",
+      "name": "引文与法规",
+      "owner": "/literature-review + paper_tools cite",
+      "agents": [],
+      "min_artifacts": 1,
+      "require_name": [
+        "citation|引文"
+      ],
+      "gate": "C2：引文与税法文号核验表（已核验/待核验）是否可接受？"
+    },
+    {
+      "id": "S10",
+      "name": "成稿",
+      "owner": "/paper-draft",
+      "agents": [
+        "paper-writer-agent"
+      ],
+      "min_artifacts": 1,
+      "require_name": [
+        "draft|成稿|v0"
+      ],
+      "checks": [
+        "citations_resolved",
+        "results_linked"
+      ],
+      "gate": "C3：主张—证据—测算数字对照是否准确？"
+    },
+    {
+      "id": "S11",
+      "name": "精修",
+      "owner": "/paper-refine",
+      "agents": [
+        "paper-writer-agent"
+      ],
+      "min_artifacts": 2,
+      "require_name": [
+        "reviews"
+      ],
+      "checks": [
+        "citations_resolved",
+        "results_linked"
+      ],
+      "gate": "C4：精修结果与剩余问题是否可接受？"
+    },
+    {
+      "id": "S12",
+      "name": "终检",
+      "owner": "Research Director + 研究者",
+      "agents": [],
+      "min_artifacts": 1,
+      "require_name": [
+        "final|终稿"
+      ],
+      "checks": [
+        "citations_resolved",
+        "citations_verified",
+        "results_linked",
+        "no_open_questions"
+      ],
+      "gate": "C5：MBA 论文提交与答辩前终检清单（含 AI 使用披露）是否完成？"
+    }
+  ]
+}
