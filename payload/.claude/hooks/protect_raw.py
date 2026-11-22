@@ -26,6 +26,8 @@ DESTRUCTIVE = re.compile(
     r"|sed\s+-[a-z]*i"
 )
 COPYLIKE = re.compile(r"(?i)(?:^|[\s;&|(])(cp|copy|xcopy|robocopy|copy-item)\b")
+DEST_ARG = re.compile(r'''(?i)(?:^|\s)-dest(?:ination)?\s+(?:"([^"]+)"|'([^']+)'|(\S+))''')
+SHELL_TOK = re.compile(r'''"([^"]*)"|'([^']*)'|(\S+)''')
 REDIRECT = re.compile(r"(?:^|[^<\d])>>?\s*[\"']?([^\s\"'|;&]+)")
 
 
@@ -35,9 +37,8 @@ def norm(p):
 
 
 def is_protected(path):
-    n = norm(path)
-    return any(("/" + pr + "/") in ("/" + n + "/") or n.startswith(pr + "/") or n.endswith("/" + pr)
-               or ("/" + pr + "/") in n for pr in PROTECTED)
+    padded = "/" + norm(path).strip("/") + "/"
+    return any(("/" + pr + "/") in padded for pr in PROTECTED)
 
 
 AGY = False  # set when the input comes from Antigravity (agy) instead of Claude Code
@@ -57,7 +58,8 @@ def block(msg):
     if AGY:
         sys.stdout.write(json.dumps({"decision": "deny", "reason": "BLOCKED by protect_raw hook: " + msg}) + "\n")
         sys.exit(0)
-    sys.stderr.write("BLOCKED by protect_raw hook: " + msg + "\n")
+    sys.stderr.buffer.write(("BLOCKED by protect_raw hook: " + msg + "\n").encode("utf-8"))
+    sys.stderr.buffer.flush()
     sys.exit(2)
 
 
@@ -108,9 +110,18 @@ def main():
         for m in REDIRECT.finditer(cmd):
             if is_protected(m.group(1)):
                 block("shell redirect writes into a protected raw path.")
-        if COPYLIKE.search(cmd):
-            tokens = cmd.strip().split()
-            if tokens and is_protected(tokens[-1].strip("\"'")):
+        for seg in re.split(r"&&|\|\||[;|\n]", cmd):
+            if not COPYLIKE.search(seg):
+                continue
+            dm = DEST_ARG.search(seg)
+            if dm:
+                dest = next(g for g in dm.groups() if g is not None)
+                if is_protected(dest):
+                    block("copy destination is a protected raw path.")
+                continue
+            toks = [next(g for g in m.groups() if g is not None) for m in SHELL_TOK.finditer(seg)]
+            pos = [t for t in toks[1:] if not t.startswith("-")]
+            if len(pos) >= 2 and is_protected(pos[-1]):
                 block("copy destination is a protected raw path.")
     done()
 

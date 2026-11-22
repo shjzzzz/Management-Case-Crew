@@ -1,17 +1,34 @@
-# Research Standards (Management Single-Case & Tax/Tax-Law)
+---
+type: research-standards
+updated: YYYY-MM-DD
+---
 
-## Evidence hierarchy (practical preference, not truth ranking)
-Primary statutory/tax-audit & audited financial sources -> peer-reviewed management/tax journals -> authoritative case databases -> industry/policy reports -> interviews/commentary.
+# Research Standards（管理学单一案例与涉税研究标准）
 
-## Literature record
-Full citation, DOI/URL, status, question, management theory/framework, case/sample, evidence/method, findings, limitations, relevance, page/table refs.
+## 1. 证据层级（实务优先级，非真理排名）
+一手法律/税务稽查文书与经审计财务报表 → 同行评审管理学/财税核心期刊 → 权威案例库（哈佛/毅伟/中欧/百优案例）→ 行业与监管报告 → 访谈纪要、新闻报道与二次解读。
 
-## Case & Financial/Tax Calculation record
-Project ID, case enterprise & fiscal window, data source/version, exact calculation formula (e.g. ETR, tax burden rate), peer benchmark sample, software/package versions, script path and Git commit, output, triangulation sources.
+## 2. 论证脊柱（Single Argument Spine）
+任何 MBA 单一案例学位论文或管理案例研究必须保持全链路一致：
+`案例选择与核心问题 (S1)` → `管理与税法文献缺口 (S2)` → `管理分析框架与税法底线 (S3)` → `单一案例协议、三角验证矩阵与措辞上限 (S4)` → `可复现财务/ETR/税负测算、证据编码与结果登记簿 res:* (S5)` → `盲审级独立审查与 7 类失效闸门 (S6–S7)` → `主张清单 C1..Cn 与受限成稿/精修/润色 (S8–S12)`。
+任何环节不得出现“理论框架与案例诊断两张皮”或“未先查明成因与证据链就直接开对策清单”。
 
-## Claim & Triangulation discipline
-- Single-source claims (e.g. one interview without documentary/financial corroboration) must be labeled as preliminary or qualified.
-- Distinguish case facts, theoretical interpretation, and normative recommendations.
+## 3. 文献、案例测算与税法记录最低字段
+- **文献/案例记录**：完整引文、`cite_key`、DOI/URL、发表状态、研究问题、管理理论/框架、案例/样本、证据与方法、核心发现、局限、三层定位锚点（`locator`：页码/表号/访谈编号/条款）与主张适用边界（`claim_scope`）。
+- **财务/税负测算记录**：项目 ID、案例企业与会计年度、数据来源与报表页码、计算公式（如 ETR、增值税税负率、杜邦拆解）、同业对标样本、软件与包版本、脚本路径与 Git commit、输出表图、结果登记簿 ID（`res:*`）与三角验证来源。
+- **税法记录**：发文机关、文号、发布日期、生效日期、废止/修订状态、适用税期与范围、行刑衔接边界（《税收征收管理法》第 63 条与《刑法》第 201/205 条等）、官方 URL；严格区分合法税收筹划（真实商业实质 + 法定依据）、激进避税与违法偷漏税。
 
-## Tax-law record
-Issuing authority, document number, promulgation date, effective date, amendment/repeal status, tax period, scope, administrative/criminal boundary, official URL.
+## 4. 案例证据与措辞阶梯
+- **多源三角验证成立**（如经审计报表/税务文书 + 访谈/内控制度交叉印证）：可使用“反映出 / 导致 / 构成核心诱因”，并指向具体证据链与 `{{res:id}}`。
+- **单一来源或部分印证**（如仅单次访谈、缺乏书面或财务交叉印证）：须标明“访谈反映 / 初步提示，有待……进一步核实”。
+- **理论解释与规范建议**：明确区分案例事实、理论推演（“从 COSO/委托代理视角看，与……机制一致”）与规范性改进建议，不得将理论假设写成已核实事实。
+
+## 5. 7 类 AI 研究失效模式闸门（S6 独立审查 & S12 终检强制清零）
+通过 S6 或 S12 关卡前，必须逐条核查并确认无以下失效：
+1. **实现与口径缺陷（Implementation bugs）**：财务口径混用（合并 vs 母公司、权责发生 vs 收付实现）、税率/扣除标准错算、同业对标样本静默删减。
+2. **结果幻觉（Hallucinated results）**：正文出现未登记在 `Meta/results-ledger.json` 的核心财务/税负数字，或编造访谈原话与处罚金额。
+3. **捷径依赖（Shortcut reliance）**：用单年度孤立指标或片面新闻替代多年趋势与多源三角验证；跳过问题诊断直接套用通用对策模板。
+4. **把异常当洞见（Bug-as-insight reframing）**：将报表重述、一次性政府补助或口径变更误读为企业税收筹划成效或偷漏税证据。
+5. **方法论编造（Methodology fabrication）**：未建立证据链或访谈编码规则即宣称满足 Yin 建构效度/内部效度/信度要求。
+6. **框架锁定（Frame-lock）**：强行把案例塞进预设框架（如硬套 SWOT/COSO），忽视框架无法解释的反常证据或更贴合的竞争解释。
+7. **引文与法条幻觉及 L3 错配（Citation hallucinations & L3 mismatch）**：编造文献、失效或虚构税法文号、未核验 `[@key]`、缺少 `locator` 锚点，或用摘要过度引申替代原文证据。

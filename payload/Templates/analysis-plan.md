@@ -3,16 +3,42 @@ type: analysis-plan
 project_id: ""
 version: 1
 status: draft
-date: YYYY-MM-DD
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
 ---
 
-# 1. Case Selection & Unit of Analysis (案例对象、时间窗口与分析单元)
-# 2. Theoretical Framework & Diagnostic Dimensions (管理学框架与诊断维度)
-# 3. Tax-Law Baseline & Compliance Boundary (适用税法清单与违法/筹划边界)
-# 4. Triangulation Matrix (三角验证矩阵：核心主张 -> 多源证据)
-# 5. Financial & Tax Calculation Formulas (财务指标、ETR、税负率与处罚/节税测算公式)
-# 6. Peer Benchmark Sample (同业对标企业/行业均值口径)
-# 7. Qualitative Coding / Interview Protocol (访谈提纲与质性编码规则)
-# 8. Validity & Reliability Safeguards (Yin 四大准则保障与竞争性解释)
-# 9. Planned Outputs (计划产出图表与结果登记 id)
-# 10. Deviations Log (执行偏离记录)
+# 预设案例分析与测算计划（Case Protocol & Analysis Plan）
+
+> 本计划在 S4 关卡冻结；S5 任何口径或样本偏离必须在 `analysis-log.md` 逐项记录原因。本文件同时作为 S8 论文大纲的权威输入。
+
+## 1. 案例界定、分析单位与时间窗口
+- **案例企业与选择理由**：（典型性 / 极端性 / 启示性 / 关键性，说明为何选单一案例）
+- **分析单位与时间窗口**：（集团/子公司/特定业务线，会计年度区间）
+- **核心研究问题**：
+
+## 2. 财务与税负测算口径（禁止静默调整）
+- **核心指标与计算公式**：（如 ETR = 所得税费用 / 利润总额；现金有效税率；增值税税负率；毛利率/费用率等）
+- **报表口径与会计准则**：（合并报表 vs 母公司报表；中国企业会计准则/IFRS）
+- **同业对标样本选择标准**：（行业分类代码、上市板块、排除 ST/异常值规则）
+
+## 3. 证据链与三角验证矩阵（Yin 效度与信度）
+| 拟验证核心命题 / 诊断维度 | 证据源 1（财报/申报/税务文书） | 证据源 2（内控制度/流程/合同） | 证据源 3（访谈/公开披露/同业对标） | 证伪标准（何种证据推翻该诊断） |
+|---|---|---|---|---|
+| | | | | |
+
+## 4. 访谈提纲 / 质性编码与竞争解释排查
+- **访谈对象与匿名化规则**：（岗位层级，严禁泄露未公开个人/企业敏感信息至外部服务）
+- **编码类目与一致性核验**：
+- **竞争性解释排查清单**：（如行业周期冲击、一次性政策补贴、会计政策变更等）
+
+## 5. 效度/信度威胁与措辞上限
+- **四大效度与信度控制**（建构效度 / 内部效度 / 外部效度 / 信度）：
+- **允许的措辞上限**（来自 `/case-design-audit`：多源三角验证归因 / 初步提示 / 理论推演）：
+
+## 6. 计划输出表图与结果登记前缀
+- 计划表图（Table 1..N、Figure 1..N）：
+- `Meta/results-ledger.json` 建议前缀（如 `<project>.t1`）：
+
+## 7. 偏离记录（冻结后追加）
+| 日期 | 偏离项 | 原因 | 对证据链/测算口径的影响 |
+|---|---|---|---|

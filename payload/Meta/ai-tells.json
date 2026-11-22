@@ -1,0 +1,238 @@
+{
+  "_comment": "Pattern list used by `paper_tools.py polish scan`. Advisory only: a hit means 'look at this sentence', not 'this is wrong'. Researcher-editable: add, delete or loosen rules to match your own field and voice. Fields: id, lang (zh|en|any), category, regex, hint; needs_evidence=true flags the sentence only when it carries no number, {{res:id}} or table/figure reference; needs_evidence=\"cite\" flags it only when it carries no [@key].",
+  "max_sentence_chars_zh": 90,
+  "max_sentence_words_en": 40,
+  "connective_threshold": 3,
+  "connective_starts_zh": [
+    "此外",
+    "同时",
+    "另外",
+    "进一步",
+    "与此同时",
+    "不仅如此"
+  ],
+  "connective_starts_en": [
+    "Moreover",
+    "Furthermore",
+    "Additionally",
+    "In addition",
+    "Notably",
+    "Importantly"
+  ],
+  "cite_dump_threshold": 4,
+  "rules": [
+    {
+      "id": "zh-opener-era",
+      "lang": "zh",
+      "category": "套话开头",
+      "regex": "近年来|随着[^，。]{1,24}(的)?(快速|迅速|不断|持续|深入)?(发展|推进|深化|普及)",
+      "hint": "删去时代背景套话，直接写本文要回答的问题和缺口"
+    },
+    {
+      "id": "zh-opener-attention",
+      "lang": "zh",
+      "category": "套话开头",
+      "regex": "(引起|引发|受到)了?(学界|社会|各界|政府)?的?(广泛|高度|普遍)关注",
+      "hint": "说明谁在争论什么，用具体文献代替“受到关注”"
+    },
+    {
+      "id": "zh-significance",
+      "lang": "zh",
+      "category": "意义空话",
+      "regex": "(具有|有着)(重要的|重大的|深远的)?(理论|现实)(意义|价值)",
+      "hint": "写出对哪条文献争论或哪项政策判断有什么增量"
+    },
+    {
+      "id": "zh-filler",
+      "lang": "zh",
+      "category": "空洞强调",
+      "regex": "值得注意的是|需要指出的是|值得一提的是|不难发现|显而易见|毋庸置疑",
+      "hint": "重要的内容让句子本身说明，删掉提示语"
+    },
+    {
+      "id": "zh-summary-cliche",
+      "lang": "zh",
+      "category": "空洞强调",
+      "regex": "综上所述|总而言之|总的来说",
+      "hint": "直接写结论并指向证据（表、图或结果编号）"
+    },
+    {
+      "id": "zh-not-only",
+      "lang": "zh",
+      "category": "机械句式",
+      "regex": "不仅[^。；]{1,30}(而且|还|也)",
+      "hint": "拆成两句，或写出两者的具体关系"
+    },
+    {
+      "id": "zh-hype",
+      "lang": "zh",
+      "category": "夸大与新颖性堆砌",
+      "regex": "开创性|里程碑|革命性|颠覆性|前所未有|填补了?(国内|学术|研究)?空白|首次|率先|创新性地",
+      "hint": "写出与哪些文献相比差在哪里；“首次”须有文献依据"
+    },
+    {
+      "id": "zh-authority",
+      "lang": "zh",
+      "category": "无来源断言",
+      "regex": "学界普遍认为|大量(的)?研究(表明|证明|发现|显示)|众所周知|已有研究(普遍)?(表明|认为|发现)|现有文献(普遍)?(表明|认为)",
+      "hint": "改成具体 [@key]，并说明该文献的结论与适用条件",
+      "needs_evidence": "cite"
+    },
+    {
+      "id": "zh-overclaim",
+      "lang": "zh",
+      "category": "措辞强于证据",
+      "regex": "证明了?|证实了?|彻底|根本性地?|毫无疑问|必然(会|导致|使)",
+      "hint": "实证结果用“表明”“提供证据”；除非有定理，不用“证明”"
+    },
+    {
+      "id": "zh-significant-unquantified",
+      "lang": "zh",
+      "category": "“显著”未量化",
+      "regex": "显著",
+      "hint": "同时给出经济量级与统计精度，或链接结果 {{res:id}}",
+      "needs_evidence": true
+    },
+    {
+      "id": "zh-vague-degree",
+      "lang": "zh",
+      "category": "模糊程度词",
+      "regex": "较为|相对而言|(在)?一定程度上|某种程度上",
+      "hint": "量化（给出区间并说明口径），或直接删去"
+    },
+    {
+      "id": "zh-intensifier",
+      "lang": "zh",
+      "category": "空洞量词",
+      "regex": "(大量|广泛|深入|全面|系统)(的)?(实验|检验|分析|研究|稳健性检验)",
+      "hint": "写出具体检验的数量与种类"
+    },
+    {
+      "id": "en-opener",
+      "lang": "en",
+      "category": "套话开头",
+      "regex": "[Ii]n recent years|[Ww]ith the rapid (development|growth|expansion) of|has attracted (increasing|growing) attention",
+      "hint": "Open with the question and the gap, not the era"
+    },
+    {
+      "id": "en-ai-vocab",
+      "lang": "en",
+      "category": "AI 高频词",
+      "regex": "\\b(delve[sd]?|delving|underscor(e|es|ed|ing)|intricate|tapestry|testament|pivotal|showcas(e|es|ed|ing)|seamless(ly)?|realm|paves? the way)\\b",
+      "hint": "Use the plain word or state the concrete point"
+    },
+    {
+      "id": "en-leverage",
+      "lang": "en",
+      "category": "AI 高频词",
+      "regex": "\\bleverag(e|es|ed|ing)\\b",
+      "hint": "Usually 'use'"
+    },
+    {
+      "id": "en-novelty",
+      "lang": "en",
+      "category": "夸大与新颖性堆砌",
+      "regex": "to the best of our knowledge|for the first time|\\bnovel\\b|groundbreaking|revolutioni[sz]e",
+      "hint": "Say what prior work does not do, with citations"
+    },
+    {
+      "id": "en-filler",
+      "lang": "en",
+      "category": "空洞强调",
+      "regex": "[Ii]t is worth noting that|[Ii]t should be (noted|emphasi[sz]ed) that|\\b[Nn]otably,|\\b[Ii]mportantly,",
+      "hint": "If it matters, the sentence shows it"
+    },
+    {
+      "id": "en-overclaim",
+      "lang": "en",
+      "category": "措辞强于证据",
+      "regex": "\\b(prove[sd]?|proving)\\b|\\bdemonstrate[sd]? that\\b|\\bconfirm(s|ed)? that\\b",
+      "hint": "Empirical work shows or provides evidence; it does not prove"
+    },
+    {
+      "id": "en-significantly",
+      "lang": "en",
+      "category": "“显著”未量化",
+      "regex": "\\bsignificantly\\b",
+      "hint": "Give the magnitude and the precision, or link {{res:id}}",
+      "needs_evidence": true
+    },
+    {
+      "id": "en-vague-degree",
+      "lang": "en",
+      "category": "模糊程度词",
+      "regex": "\\b(somewhat|relatively|fairly|to some extent|quite)\\b",
+      "hint": "Quantify or cut"
+    },
+    {
+      "id": "en-intensifier",
+      "lang": "en",
+      "category": "空洞量词",
+      "regex": "(extensive|comprehensive|thorough) (experiments|analysis|evaluation|robustness)|a wide range of",
+      "hint": "State how many and which"
+    },
+    {
+      "id": "zh-theory-opener",
+      "lang": "zh",
+      "category": "机械句式",
+      "regex": "^(依据|基于|根据|按照)[^，。]{1,16}(理论|框架|范式)",
+      "hint": "让现象或问题先行，理论放到解释处"
+    },
+    {
+      "id": "zh-case-moral",
+      "lang": "zh",
+      "category": "空洞强调",
+      "regex": "(此|该)(案例|结果|发现)(印证|挑战|揭示|说明)了|这提示我们|由此可见|从中可以看出",
+      "hint": "删去段末的点题句，让下一句承接论证"
+    },
+    {
+      "id": "zh-passive-analysis",
+      "lang": "zh",
+      "category": "机械句式",
+      "regex": "(该|上述)(处理|设计|决策|选择|方法)(体现|反映|印证)了",
+      "hint": "写清为什么这样做，以及依据是什么"
+    },
+    {
+      "id": "zh-core-problem",
+      "lang": "zh",
+      "category": "机械句式",
+      "regex": "(面临的)?核心(问题|挑战)(是|在于)|主要矛盾体现在",
+      "hint": "用具体的矛盾或数据把问题摆出来"
+    },
+    {
+      "id": "zh-generic-end",
+      "lang": "zh",
+      "category": "意义空话",
+      "regex": "前景广阔|意义深远|具有深远影响|发挥着?(至关重要|重要)的作用",
+      "hint": "写具体的政策含义或后续检验，不用笼统结尾"
+    },
+    {
+      "id": "zh-contribution-announce",
+      "lang": "zh",
+      "category": "机械句式",
+      "regex": "(本文|本研究)的?(主要)?(贡献|创新)(在于|主要有|体现在)",
+      "hint": "贡献逐条写具体结果，与哪些文献相比增加了什么"
+    },
+    {
+      "id": "en-contribution-announce",
+      "lang": "en",
+      "category": "机械句式",
+      "regex": "(This|The) paper contributes to the literature|The remainder of this paper is organi[sz]ed as follows|[Ii]t is easy to show that|[Aa] comment is in order",
+      "hint": "Say what is found; give a roadmap specific to this paper"
+    },
+    {
+      "id": "en-investigate-relationship",
+      "lang": "en",
+      "category": "机械句式",
+      "regex": "\\bWe (investigate|examine|explore) the relationship between\\b",
+      "hint": "State the finding, not the activity"
+    },
+    {
+      "id": "en-utilize",
+      "lang": "en",
+      "category": "AI 高频词",
+      "regex": "\\b(utili[sz]e[sd]?|utili[sz]ing)\\b",
+      "hint": "Use 'use'"
+    }
+  ]
+}

@@ -25,7 +25,7 @@
     {
       "id": "S3",
       "name": "框架与税法",
-      "owner": "theory-agent / tax-policy-agent",
+      "owner": "/theory-modeling + /tax-policy-analysis",
       "agents": [
         "theory-agent",
         "tax-policy-agent"
@@ -50,7 +50,7 @@
     {
       "id": "S5",
       "name": "数据与测算",
-      "owner": "case-data-agent",
+      "owner": "/case-data-analysis (case-data-agent)",
       "agents": [
         "case-data-agent"
       ],
@@ -63,7 +63,7 @@
     {
       "id": "S6",
       "name": "盲审与预审",
-      "owner": "academic-reviewer",
+      "owner": "/academic-review (academic-reviewer)",
       "agents": [
         "academic-reviewer"
       ],
@@ -73,7 +73,7 @@
         "Major",
         "Minor"
       ],
-      "gate": "MBA 盲审级意见与答辩追问是否已完整汇报？"
+      "gate": "MBA 盲审级意见、7 类 AI 失效模式清零与答辩追问是否已完整汇报？"
     },
     {
       "id": "S7",
@@ -106,7 +106,7 @@
       "require_name": [
         "citation|引文"
       ],
-      "gate": "C2：引文与税法文号核验表（已核验/待核验）是否可接受？"
+      "gate": "C2：引文与税法文号核验表（已核验/待核验，含三层定位锚点）是否可接受？"
     },
     {
       "id": "S10",
@@ -123,12 +123,12 @@
         "citations_resolved",
         "results_linked"
       ],
-      "gate": "C3：主张—证据—测算数字对照是否准确？"
+      "gate": "C3：主张—证据—测算数字对照与措辞强度是否准确？"
     },
     {
       "id": "S11",
-      "name": "精修",
-      "owner": "/paper-refine",
+      "name": "精修与润色",
+      "owner": "/paper-refine (+ 可选 /paper-polish)",
       "agents": [
         "paper-writer-agent"
       ],
@@ -140,7 +140,7 @@
         "citations_resolved",
         "results_linked"
       ],
-      "gate": "C4：精修结果与剩余问题是否可接受？"
+      "gate": "C4：精修结果与剩余问题（及可选语言润色 polish check）是否可接受？"
     },
     {
       "id": "S12",
@@ -157,7 +157,7 @@
         "results_linked",
         "no_open_questions"
       ],
-      "gate": "C5：MBA 论文提交与答辩前终检清单（含 AI 使用披露）是否完成？"
+      "gate": "C5：MBA 论文提交与答辩前终检清单（含 7 类失效清零与 AI 使用披露）是否完成？"
     }
   ]
 }

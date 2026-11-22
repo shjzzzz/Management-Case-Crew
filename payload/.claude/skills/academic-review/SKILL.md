@@ -1,19 +1,40 @@
 ---
 name: academic-review
-description: "Conduct a skeptical, independent MBA blind review and defense Q&A prep of a management/tax single-case design or thesis manuscript. Use for 盲审、审稿、匿名审稿、挑刺、答辩预审、审查案例设计、审查论文、投稿前自查."
+description: "Conduct a skeptical, independent MBA blind review and defense prep of a management single-case manuscript, proposal or case protocol with numbered issues (F1/M1/m1), 5-dimension scores, Frame-Lock Check, Concession Threshold and 7-Mode AI Failure Gate. Use for 盲审、审稿、挑刺、答辩预审、审查案例设计、审查论文."
 argument-hint: "[manuscript, proposal or case design]"
+data_access_level: verified_only
+task_type: open-ended
 ---
 
-# Academic Review Workflow (MBA Blind Review & Defense Prep)
+# Academic Review（S6 / S11：MBA 盲审级独立对抗审查与答辩预审）
 
-Independence first: if this session helped design or write the work under review, dispatch the review to the `academic-reviewer` agent and pass it only the artifacts (question, case protocol/plan, manuscript, tables, code paths), not your own reasoning. Then present its report unchanged and add, separately labeled, any disagreement you have. If the subagent is unavailable, say so and review here, noting the reduced independence.
+## 1. 目标与边界
+以 MBA 论文盲审专家与管理学期刊审稿人视角对案例设计或论文稿件进行**独立、可证伪、证据导向**的挑刺与评级，输出与 `/paper-refine` 完全兼容的结构化审稿报告与答辩追问。**审稿方绝不直接改稿**，避免“既当运动员又当裁判”。
 
-1. Identify central management/tax problem and case selection rationale.
-2. Check for "two skins" (两张皮): does the management theory actually drive the diagnosis and recommendations?
-3. Check literature positioning, source quality, and Chinese tax-law accuracy (including tax evasion vs. tax planning boundary).
-4. Audit case evidence triangulation, financial/ETR calculation formulas, and peer benchmarking.
-5. Compare text claims with tables, interview quotes, and calculation scripts.
-6. Assess whether recommendations are actionable, costed, and risk-bounded.
-7. Classify issues: Fatal / Major / Minor, and include 3–5 likely MBA defense questions.
+## 2. 前置读取与独立性铁律
+- **独立性优先**：若当前会话参与了该案例的设计或写作，**必须**派出独立上下文的 `academic-reviewer`（按 `Templates/handoff.md` 交接），**只传递产物路径**（研究问题、案例分析计划、测算日志、结果登记簿、稿件、脚本路径），不传递作者的推理辩护过程；原样呈现其报告，若有异议单列标注。若子 Agent 不可用，须在报告开头声明“独立性降低”。
+- 必读基准：`Meta/research-standards.md`（含 7 类 AI 研究失效模式闸门）与 `Meta/constraints.md`。
 
-Tie each criticism to a specific passage, table, quote, legal provision, or missing evidence.
+## 3. 核心审查流程（八步对抗协议）
+0. **审前透明声明（Evidence-First）**：报告开头先列出**实际读取的文件路径清单**与**稿件标明日期**（未标日期须显式说明）；每条意见先指明稿件位置与核查动作，再给判断；**严禁未经研究者确认擅自推荐目标期刊**。
+1. **重构核心主张与案例价值**：复述案例到底诊断了什么管理/涉税真问题，典型性与实践增量是否成立。
+2. **检验“理论—诊断—证据—对策”链条**：是否存在“理论与案例两张皮”、未查明成因即套用通用对策模板、或未排除竞争性解释。
+3. **按稿件日期核查文献定位与税法准确性**：依据**稿件标明日期**判断文献覆盖（晚于稿件日期的新作仅列为“后续进展提示”，不计入 Fatal/Major 缺陷）；核查 L3 文献错配及中国税法发文机关、文号、现行效力与偷漏税/合法筹划边界。
+4. **审计单案例设计（Yin 四大标准）与财务/税负测算**：建构效度（多源三角验证与证据链）、内部效度（竞争解释）、外部效度（分析性概括）、信度（案例协议）；核查财务比率、ETR、税负率口径、同业对标样本及筹划方案的商业实质与行刑衔接风险。
+5. **交叉核对正文、表图、公式与代码**：核心数字是否全部可追溯到 `Meta/results-ledger.json`？正文归因措辞是否超出案例设计允许上限？
+6. **框架锁定检测（Frame-Lock Check）与未支撑前提**：跳出作者既有管理框架（如硬套 COSO/SWOT），显式检验核心框架本身是否贴合案例事实；若核心主张依赖未经核验的隐含前提，单列独立问题行。
+7. **7 类 AI 研究失效模式核查（S6/S12 阻断项）**：逐条核查 `Meta/research-standards.md` 第 5 节，任一项未清零须标为 Fatal 或 Major。
+8. **魔鬼代言人让步门槛（反谄媚）**：评估作者反驳时按证据强度打 **1–5 分**；仅 **≥4 分**（新增可核验证据、一手报表/文书或权威法源）才允许让步，1–3 分须坚持原意见；**严禁在无独立核验下连续两次让步**。
+
+## 4. 标准化输出契约（直通 `/paper-refine`、`paper_tools.py refine record` 与 `review verify`）
+1. **已读文件清单 + 总体评估**（拒绝 / 大修 / 小修建议，及一句话核心判断）。
+2. **带编号问题清单**（每条一句话 + 具体节/段/表/代码位置；**引用稿件原文必须用 `「…」` 或 `“…”` 精确摘录**以便 `paper_tools.py review verify` 机械核验）：
+   - **Fatal Flaws（`F1, F2…`）**、**Major Issues（`M1, M2…`）**、**Minor Issues（`m1, m2…`）**、**Advisory / Watchlist（可选）**。
+3. **五维度 1–10 评分**（复评必须保持完全相同的 5 个键名）：`ident`（案例设计与严谨度）、`contrib`（贡献与定位）、`inst`（税法与制度准确度）、`consist`（证据链与测算一致）、`write`（写作清晰度与规范）。
+4. **框架锁定检测结论** + **7 类 AI 失效模式逐项核查表** + **MBA 答辩高频追问（≥3 题及核查要点）**。
+5. **建议补充文献区块**：集中写入 ```` ```yaml suggested-references ````（仅填可确认的 `title`/`year`/`doi`，不推荐写 `[]`）。
+6. **复评模式专规**：对照基线编号清单逐条标记 `已解决 / 部分解决 / 仍存在`（计入 `carried`），单列新增问题（计入 `new`），禁止独立重数。
+7. **需降级/删除主张清单**与**可执行修改建议**（区分“改稿可解决”与“必须新增测算/补充证据”）。
+
+## 5. 硬性禁止
+禁止直接修改稿件或代码；禁止脱离具体文本/表/代码凭空挑刺或编造引述；禁止未经确认擅自推荐期刊；禁止无证据让步；禁止忽略致命设计/法源/数据缺陷而只纠缠文字细节。

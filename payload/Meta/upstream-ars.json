@@ -1,0 +1,92 @@
+{
+  "_comment": "Upstream design-pattern tracker for Imbad0202/academic-research-skills (ARS). Strictly design-pattern-only: ARS is licensed under CC-BY-NC-4.0, so ERC never copies ARS code, prompts or templates; all adopted patterns are rewritten natively for economics research.",
+  "repo": "Imbad0202/academic-research-skills",
+  "url": "https://github.com/Imbad0202/academic-research-skills",
+  "license": "CC-BY-NC-4.0",
+  "policy": "design-pattern-only; never copy code or prompts verbatim",
+  "last_audited_tag": "v3.24.4",
+  "last_audited_sha": "414fab45",
+  "last_audited_date": "2026-11-20",
+  "adopted_patterns": [
+    "socratic-non-generation-guardrail",
+    "devils-advocate-concession-threshold",
+    "frame-lock-check",
+    "l3-citation-locator-and-claim-alignment",
+    "data-access-level-isolation",
+    "7-mode-ai-failure-gate",
+    "style-calibration-and-ai-tells-check",
+    "rr-rebuttal-traceability-matrix",
+    "reviewer-quote-and-suggested-reference-verification",
+    "literature-date-cutoff-and-distributional-stakeholder-check",
+    "unsupported-core-premise-and-advisory-watchlist",
+    "evidence-first-review-and-no-unconfirmed-venue",
+    "honest-null-for-repro-source",
+    "author-language-revision-brief"
+  ],
+  "capability_map": [
+    {
+      "id": "reviewer_audit",
+      "label": "审稿独立性、引述核验、推荐文献核验与归宿视角",
+      "keywords": ["reviewer", "panel", "suggested-reference", "author_letter", "author letter", "stakeholder", "consensus", "roadmap", "premise", "literature coverage", "frame-lock", "concession"],
+      "erc_files": [
+        "payload/.claude/skills/academic-review/SKILL.md",
+        "payload/.claude/agents/academic-reviewer.md",
+        "payload/.claude/scripts/paper_tools.py"
+      ]
+    },
+    {
+      "id": "revision_and_rr",
+      "label": "精修循环与期刊 R&R 返修追踪",
+      "keywords": ["revision-coach", "rebuttal", "re-review", "refine", "correspondence"],
+      "erc_files": [
+        "payload/.claude/skills/paper-refine/SKILL.md",
+        "payload/Templates/rebuttal-matrix.md"
+      ]
+    },
+    {
+      "id": "citation_and_l3",
+      "label": "引文核验、L3 主张锚点与文献综述",
+      "keywords": ["citation", "passport", "locator", "claim", "bib", "doi", "crossref", "literature"],
+      "erc_files": [
+        "payload/.claude/scripts/paper_tools.py",
+        "payload/.claude/skills/literature-review/SKILL.md",
+        "payload/.claude/skills/paper-draft/SKILL.md"
+      ]
+    },
+    {
+      "id": "repro_and_data_safety",
+      "label": "复现锁诚实空值、数据隔离与写保护",
+      "keywords": ["repro_lock", "provenance", "write-scope", "guard", "symlink", "windows", "data_access"],
+      "erc_files": [
+        "payload/.claude/scripts/paper_tools.py",
+        "payload/.claude/hooks/protect_raw.py",
+        "payload/.claude/hooks/orchestrator_guard.py",
+        "payload/.claude/skills/econometric-analysis/SKILL.md"
+      ]
+    },
+    {
+      "id": "socratic_and_ideation",
+      "label": "选题与建模苏格拉底防越位护栏",
+      "keywords": ["socratic", "ideation", "non-generation", "hypothesis", "deep-research"],
+      "erc_files": [
+        "payload/.claude/skills/research-question/SKILL.md",
+        "payload/.claude/skills/theory-modeling/SKILL.md"
+      ]
+    },
+    {
+      "id": "pipeline_and_gates",
+      "label": "多阶段编排、关卡确认与完整性校验",
+      "keywords": ["pipeline", "checkpoint", "integrity", "stage", "gate", "failure mode"],
+      "erc_files": [
+        "payload/.claude/skills/research-pipeline/SKILL.md",
+        "payload/.claude/pipeline-stages.json",
+        "payload/Meta/research-standards.md"
+      ]
+    }
+  ],
+  "explicitly_excluded": [
+    {"id": "irb_clinical_ethics", "keywords": ["ethics review", "human-subjects", "biological samples", "irb"], "reason": "面向生物医学/人体受试者伦理委员会回信，不适用于宏观与财税经济学"},
+    {"id": "zotero_jsonschema_adapters", "keywords": ["zotero", "jsonschema", "obsidian adapter"], "reason": "ERC 保持 Python 纯标准库零外部依赖"},
+    {"id": "cross_model_paid_routing", "keywords": ["gpt-6", "openai_effort_guard", "marketplace", "claude desktop", "pt-br", "readme.pt"], "reason": "与 ARS 特定商业模型路由或外语 README 翻译相关，不适用 ERC 架构"}
+  ]
+}

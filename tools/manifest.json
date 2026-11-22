@@ -1,0 +1,110 @@
+{
+  "_comment": "Single source of truth for Management Case Crew installer and checkers (used by Install-ManagementCaseCrew.ps1, Test-ManagementCaseCrew.ps1 and tools/mcc_cli.py).",
+  "agents": [
+    "literature-agent",
+    "theory-agent",
+    "tax-policy-agent",
+    "case-data-agent",
+    "case-design-agent",
+    "academic-reviewer",
+    "paper-writer-agent"
+  ],
+  "skills": [
+    "research-question",
+    "literature-review",
+    "theory-modeling",
+    "tax-policy-analysis",
+    "case-design-audit",
+    "case-data-analysis",
+    "academic-review",
+    "ingest-source",
+    "query-wiki",
+    "wiki-lint",
+    "research-pipeline",
+    "paper-outline",
+    "paper-draft",
+    "paper-refine",
+    "paper-polish",
+    "scientific-visualization",
+    "thu-digitizer"
+  ],
+  "meta_required": [
+    "Meta/purpose.md",
+    "Meta/index.md",
+    "Meta/review-queue.md",
+    "Meta/vault-map.md",
+    "Meta/research-standards.md",
+    "Meta/source-registry.md",
+    "Meta/log.md",
+    "Meta/collaboration-protocol.md",
+    "Meta/style-guide.md",
+    "Meta/mechanism-library.md",
+    "Meta/decisions.md",
+    "Meta/ai-tells.json",
+    "Meta/upstream-ars.json",
+    "Meta/constraints.md",
+    "Meta/aliases.csv"
+  ],
+  "research_dirs": [
+    "00-Inbox",
+    "01-Research-Projects",
+    "03-Literature",
+    "03-Literature/_sources",
+    "04-Theories",
+    "05-Methods",
+    "06-Data/raw",
+    "06-Data/processed",
+    "06-Data/metadata",
+    "07-Code/python",
+    "07-Code/R",
+    "07-Code/stata",
+    "08-Research-Notes",
+    "09-Writing",
+    "10-Archive",
+    "MOC"
+  ],
+  "required_dirs": [
+    "06-Data/raw",
+    "06-Data/processed",
+    "07-Code"
+  ],
+  "backup_files": [
+    "CLAUDE.md",
+    ".mcp.json",
+    ".claude/settings.json",
+    "AGENTS.md",
+    ".agents/hooks.json"
+  ],
+  "claude_required": [
+    ".claude/MANAGEMENT-CASE-RESEARCH.md",
+    ".claude/scripts/wiki_lint.py",
+    ".claude/scripts/orchestrator.py",
+    ".claude/scripts/paper_tools.py",
+    ".claude/scripts/refmgr.py",
+    ".claude/hooks/validate_paper.py",
+    ".claude/pipeline-stages.json",
+    "Templates/handoff.md",
+    "Templates/paper-outline.md",
+    "Templates/rebuttal-matrix.md"
+  ],
+  "agents_required": [
+    ".agents/scripts/wiki_lint.py",
+    ".agents/scripts/orchestrator.py",
+    ".agents/scripts/paper_tools.py",
+    ".agents/scripts/refmgr.py",
+    ".agents/pipeline-stages.json"
+  ],
+  "hooks_claude": [
+    "session_context.py",
+    "protect_raw.py",
+    "validate_frontmatter.py",
+    "validate_paper.py",
+    "routing_hint.py",
+    "orchestrator_guard.py",
+    "orchestrator_record.py"
+  ],
+  "hooks_agy": [
+    "protect_raw.py",
+    "routing_hint.py"
+  ]
+}

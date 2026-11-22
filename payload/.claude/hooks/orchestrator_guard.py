@@ -28,9 +28,11 @@ import uuid
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(HERE), "scripts"))
 
-GATE_CMD = re.compile(r"orchestrator\.py[\"']?\s+(?:--\S+\s+\S+\s+)*gate\b")
+_CLI_OPTS = r'''(?:--\S+(?:=\S+|\s+(?:"[^"]*"|'[^']*'|\S+))\s+)*'''
+GATE_CMD = re.compile(r"orchestrator\.py[\"']?\s+" + _CLI_OPTS + r"gate\b")
 PROTECTED_FILE = re.compile(r"(?:^|/)(?:STATE\.json|run-ledger\.jsonl|citation-map\.json|results-ledger\.json|reviews\.json)$", re.I)
-CONFIRM_CMD = re.compile(r"paper_tools\.py[\"']?\s+(?:--\S+\s+\S+\s+)*cite\s+confirm\b")
+ZNOTE_CMD = re.compile(r"paper_tools\.py[\"']?\s+" + _CLI_OPTS + r"cite\s+zotero-note\b.*--yes\b")
+CONFIRM_CMD = re.compile(r"paper_tools\.py[\"']?\s+" + _CLI_OPTS + r"cite\s+confirm\b")
 
 
 def block(msg):
@@ -49,33 +51,46 @@ def ask(msg):
 def main():
     try:
         data = json.loads(sys.stdin.buffer.read().decode("utf-8-sig", "replace"))
-        import orchestrator as orc
         tool = data.get("tool_name", "")
         ti = data.get("tool_input", {}) or {}
-        vault = orc.find_vault(data.get("cwd"))
-        if not vault:
-            return
-        cfg = orc.load_cfg()
     except Exception:
         return
 
     try:
+        # Fast path: 99%+ of Write/Edit/Bash/PowerShell calls never touch protected files or gate commands;
+        # avoid importing orchestrator.py or reading pipeline-stages.json unless a pattern actually matches.
         if tool in ("Write", "Edit", "MultiEdit"):
             fp = (ti.get("file_path") or "").replace("\\", "/")
-            if PROTECTED_FILE.search(fp):
-                block("%s 由脚本维护，不要直接编辑；用 orchestrator.py / paper_tools.py 的命令。" % os.path.basename(fp))
-            return
+            if not PROTECTED_FILE.search(fp):
+                return
+            import orchestrator as orc
+            if not orc.find_vault(data.get("cwd")):
+                return
+            block("%s 由脚本维护，不要直接编辑；用 orchestrator.py / paper_tools.py 的命令。" % os.path.basename(fp))
 
         if tool in ("Bash", "PowerShell"):
             cmd = ti.get("command", "") or ""
+            reason = None
             if GATE_CMD.search(cmd):
-                ask("这是研究关卡决定：只有研究者表态后才应通过。请确认研究者已作出该决定（--decision / --note 与其一致）。")
-            if CONFIRM_CMD.search(cmd):
-                ask("这是研究者对引文来源的人工核验：只有研究者亲自核对原文后才应确认。请确认 --note 如实反映了核对方式。")
-            return
+                reason = "这是研究关卡决定：只有研究者表态后才应通过。请确认研究者已作出该决定（--decision / --note 与其一致）。"
+            elif ZNOTE_CMD.search(cmd):
+                reason = "这会向 Zotero 云端库写入一条新笔记（不可由本工具撤销）。请确认研究者同意回写，且已预览过内容。"
+            elif CONFIRM_CMD.search(cmd):
+                reason = "这是研究者对引文来源的人工核验：只有研究者亲自核对原文后才应确认。请确认 --note 如实反映了核对方式。"
+            if not reason:
+                return
+            import orchestrator as orc
+            if not orc.find_vault(data.get("cwd")):
+                return
+            ask(reason)
 
         if tool not in ("Agent", "Task"):
             return
+        import orchestrator as orc
+        vault = orc.find_vault(data.get("cwd"))
+        if not vault:
+            return
+        cfg = orc.load_cfg()
         agent = ti.get("subagent_type") or ""
         ap = orc.active_project(vault)
         req_id = uuid.uuid4().hex[:12]
@@ -94,7 +109,7 @@ def main():
         if ai > ci:
             block("%s 属于阶段 %s，而项目当前在 %s %s；前序关卡未通过，不能跳阶段。先用 orchestrator.py next 查看。"
                   % (agent, cfg["stages"][ai]["id"], sid, stage["name"]))
-        budget = 1 + cfg.get("max_retries", 2)
+        budget = orc.retry_budget(cfg)
         n = proj["stages"][sid]["attempts"].get(agent, 0)
         if n >= budget:
             block("%s 在阶段 %s 已失败 %d 次，达到重试上限。停下并向研究者报告；研究者决定 revise 后才可继续。" % (agent, sid, n))

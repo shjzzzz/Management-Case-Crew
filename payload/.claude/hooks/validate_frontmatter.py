@@ -19,8 +19,8 @@ def main():
     fp = ti.get("file_path", "") or ""
     if not fp.lower().endswith(".md"):
         sys.exit(0)
-    n = fp.replace("\\", "/")
-    if "/.claude/" in n or n.startswith(".claude/"):
+    n = fp.replace("\\", "/").lower()
+    if any((d in n or n.startswith(d.lstrip("/"))) for d in ("/.claude/", "/.agents/", "/_erc-backups/")):
         sys.exit(0)
     cwd = data.get("cwd") or os.getcwd()
     path = fp if os.path.isabs(fp) else os.path.join(cwd, fp)
@@ -35,11 +35,11 @@ def main():
         sys.exit(0)
     end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), None)
     if end is None:
-        sys.stderr.write("WARNING: frontmatter in %s has no closing '---'; Obsidian will not parse it. Please fix.\n" % os.path.basename(path))
+        sys.stderr.buffer.write(("WARNING: frontmatter in %s has no closing '---'; Obsidian will not parse it. Please fix.\n" % os.path.basename(path)).encode("utf-8"))
         sys.exit(2)
     for i in range(1, end):
         if "\t" in lines[i]:
-            sys.stderr.write("WARNING: frontmatter in %s line %d contains a tab; YAML needs spaces. Please fix.\n" % (os.path.basename(path), i + 1))
+            sys.stderr.buffer.write(("WARNING: frontmatter in %s line %d contains a tab; YAML needs spaces. Please fix.\n" % (os.path.basename(path), i + 1)).encode("utf-8"))
             sys.exit(2)
     sys.exit(0)
 

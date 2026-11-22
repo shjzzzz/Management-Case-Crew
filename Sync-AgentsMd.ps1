@@ -1,6 +1,6 @@
 ﻿[CmdletBinding()]
 param(
-    [string]$VaultPath = "D:\ManagementCaseWiki",
+    [Parameter(Mandatory)][string]$VaultPath,
     [switch]$Check   # 只检查是否同步，不写文件（不同步时退出码 1）
 )
 # 以库里当前的 CLAUDE.md + .claude/MANAGEMENT-CASE-RESEARCH.md 为准，重新生成 AGENTS.md 中的 ERC 区块。
