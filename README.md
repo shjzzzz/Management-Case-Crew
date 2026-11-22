@@ -1,6 +1,6 @@
 # Management Case Crew
 
-面向**管理学（含税法合规、偷漏税治理与税收筹划）单一案例研究与 MBA 学位论文**的 AI 研究协同套件，把 Obsidian 知识库升级为可复现、可核验、支持多平台（Claude Code / Antigravity / Codex）的案例研究工作区。
+面向**管理学（含税法合规、偷漏税治理与税收筹划）单一案例研究与 MBA 学位论文**的 AI 研究协同套件，把 Obsidian 知识库升级为可复现、可核验、支持多平台（Claude Code / Antigravity / Codex）的案例研究工作区。供学生学年论文使用。
 
 > **核心原则**：AI 是研究协作者，不是学术裁决者；绝不覆盖既有文件、绝不修改原始数据（`06-Data/raw`、`03-Literature/_sources`）、绝不虚构文献/法条/财报数字/访谈原话；所有阶段关卡与最终结论均由研究者拍板。
 
